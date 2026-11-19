@@ -41,10 +41,6 @@ class ImageBatch(LoggingMixin, BaseBatch):
         return self.images.shape[0]
 
     def __add__(self, other):
-        # Defense: H, W, C are checked first so mismatched batches fail with a
-        # clear ValueError. Images and labels are concatenated along axis 0 in
-        # the same order (self, then other), so each label stays aligned with
-        # its image. A new ImageBatch is returned and neither input is changed.
         if not isinstance(other, ImageBatch):
             return NotImplemented
         if self.images.shape[1:] != other.images.shape[1:]:
